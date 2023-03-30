@@ -174,7 +174,7 @@ class _LivePageState extends State<LivePage> {
       if (response.statusCode == 200) {
         // When the gift giver calls the gift interface successfully,
         // the gift animation can start to be displayed
-        GiftWidget.show(context, "assets/sports-car.svga");
+        GiftWidget.show(context, "assets/EmptyState.svga");
       }
     } on Exception catch (error) {
       debugPrint("[ERROR], store fcm token exception, ${error.toString()}");
