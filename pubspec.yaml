@@ -34,11 +34,11 @@ dependencies:
   flutter_screenutil:
 
   zego_uikit_prebuilt_live_audio_room:
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  svgaplayer_flutter: ^2.2.0
   cupertino_icons: ^1.0.2
+  getwidget: ^3.0.1
 
-#  zego_uikit:
+  zego_uikit:
 #  zego_uikit_signaling_plugin:
 
 #  http: ^0.13.4

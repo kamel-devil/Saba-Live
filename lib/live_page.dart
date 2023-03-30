@@ -1,9 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:livechat/zegoinroomliveviewitem.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
+import 'package:svgaplayer_flutter/parser.dart';
+import 'package:svgaplayer_flutter/player.dart';
+import 'package:http/http.dart' as http;
+import 'package:svgaplayer_flutter/proto/svga.pb.dart';
 
 import 'constants.dart';
+import 'gift_send.dart';
 
-class LivePage extends StatelessWidget {
+class LivePage extends StatefulWidget {
   final String roomID;
   final bool isHost;
   final LayoutMode layoutMode;
@@ -16,23 +25,72 @@ class LivePage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<LivePage> createState() => _LivePageState();
+}
+
+class _LivePageState extends State<LivePage> {
+  final List<StreamSubscription<dynamic>?> subscriptions = [];
+  var animationVisibility = ValueNotifier<bool>(true);
+
+  void onInRoomCommandReceived(ZegoInRoomCommandReceivedData commandData) {
+    debugPrint(
+        "onInRoomCommandReceived, fromUser:${commandData.fromUser}, command:${commandData.command}");
+    // You can display different animations according to gift-type
+    if (commandData.fromUser.id != localUserID) {
+      GiftWidget.show(context, "assets/sports-car.svga");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      subscriptions.add(ZegoUIKit()
+          .getInRoomCommandReceivedStream()
+          .listen(onInRoomCommandReceived));
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (var subscription in subscriptions) {
+      subscription?.cancel();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ZegoUIKitPrebuiltLiveAudioRoom(
           appID: 1091141321 /*input your AppID*/,
-          appSign: '93f42e59c8f5b204e500416d4a9ccb639e4cb28bccd0fd927c637281b7918e21' /*input your AppSign*/,
+          appSign:
+              '93f42e59c8f5b204e500416d4a9ccb639e4cb28bccd0fd927c637281b7918e21' /*input your AppSign*/,
           userID: localUserID,
           userName: 'user_$localUserID',
-          roomID: roomID,
-          config: (isHost
+          roomID: widget.roomID,
+          config: (widget.isHost
               ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
               : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience())
-            ..takeSeatIndexWhenJoining = isHost ? getHostSeatIndex() : -1
+            ..takeSeatIndexWhenJoining = widget.isHost ? getHostSeatIndex() : -1
             ..hostSeatIndexes = getLockSeatIndex()
             ..layoutConfig = getLayoutConfig()
             ..seatConfig = getSeatConfig()
             ..background = background()
-            // ..inRoomMessageViewConfig = getMessageViewConfig()
+            ..inRoomMessageViewConfig = getMessageViewConfig()
+            ..bottomMenuBarConfig =
+                ZegoBottomMenuBarConfig(maxCount: 5, audienceExtendButtons: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(40, 40),
+                  shape: const CircleBorder(),
+                ),
+                onPressed: () {
+                  _sendGift();
+                },
+                child: const Icon(Icons.blender),
+              )
+            ])
             // ..userAvatarUrl = 'your_avatar_url'
             ..onUserCountOrPropertyChanged = (List<ZegoUIKitUser> users) {
               debugPrint(
@@ -94,6 +152,35 @@ class LivePage extends StatelessWidget {
     );
   }
 
+  Future<void> _sendGift() async {
+    late http.Response response;
+    try {
+      response = await http.post(
+        Uri.parse(
+            'https://zego-example-server-nextjs.vercel.app/api/send_gift'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'app_id': 1091141321,
+          'server_secret': 'c65303ded2a97728cf5b9d76b978453d',
+          'room_id': widget.roomID,
+          'user_id': localUserID,
+          'user_name': 'user_$localUserID',
+          'gift_type': 1001,
+          'gift_count': 1,
+          'timestamp': DateTime.now().millisecondsSinceEpoch,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // When the gift giver calls the gift interface successfully,
+        // the gift animation can start to be displayed
+        GiftWidget.show(context, "assets/sports-car.svga");
+      }
+    } on Exception catch (error) {
+      debugPrint("[ERROR], store fcm token exception, ${error.toString()}");
+    }
+  }
+
   Widget background() {
     /// how to replace background view
     return Stack(
@@ -122,7 +209,7 @@ class LivePage extends StatelessWidget {
           top: 10 + 20,
           left: 10,
           child: Text(
-            'ID: $roomID',
+            'ID: ${widget.roomID}',
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff606060),
@@ -136,7 +223,7 @@ class LivePage extends StatelessWidget {
   }
 
   ZegoLiveAudioRoomSeatConfig getSeatConfig() {
-    if (layoutMode == LayoutMode.hostTopCenter) {
+    if (widget.layoutMode == LayoutMode.hostTopCenter) {
       return ZegoLiveAudioRoomSeatConfig(
         backgroundBuilder: (
           BuildContext context,
@@ -154,37 +241,37 @@ class LivePage extends StatelessWidget {
     );
   }
 
-  // ZegoInRoomMessageViewConfig getMessageViewConfig() {
-  //   return ZegoInRoomMessageViewConfig(itemBuilder: (
-  //     BuildContext context,
-  //     ZegoInRoomMessage message,
-  //     Map<String, dynamic> extraInfo,
-  //   ) {
-  //     /// how to use itemBuilder to custom message view
-  //     return Stack(
-  //       children: [
-  //         ZegoInRoomLiveCommentingViewItem(
-  //           user: message.user,
-  //           message: message.message,
-  //         ),
-  //
-  //         /// add a red point
-  //         Positioned(
-  //           top: 0,
-  //           right: 0,
-  //           child: Container(
-  //             decoration: const BoxDecoration(
-  //               shape: BoxShape.circle,
-  //               color: Colors.red,
-  //             ),
-  //             width: 10,
-  //             height: 10,
-  //           ),
-  //         ),
-  //       ],
-  //     );
-  //   });
-  // }
+  ZegoInRoomMessageViewConfig getMessageViewConfig() {
+    return ZegoInRoomMessageViewConfig(itemBuilder: (
+      BuildContext context,
+      ZegoInRoomMessage message,
+      Map<String, dynamic> extraInfo,
+    ) {
+      /// how to use itemBuilder to custom message view
+      return Stack(
+        children: [
+          ZegoInRoomLiveCommentingViewItem(
+            user: message.user,
+            message: message.message,
+          ),
+
+          /// add a red point
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red,
+              ),
+              width: 10,
+              height: 10,
+            ),
+          ),
+        ],
+      );
+    });
+  }
 
   Widget avatarBuilder(
     BuildContext context,
@@ -201,7 +288,7 @@ class LivePage extends StatelessWidget {
   }
 
   int getHostSeatIndex() {
-    if (layoutMode == LayoutMode.hostCenter) {
+    if (widget.layoutMode == LayoutMode.hostCenter) {
       return 4;
     }
 
@@ -209,7 +296,7 @@ class LivePage extends StatelessWidget {
   }
 
   List<int> getLockSeatIndex() {
-    if (layoutMode == LayoutMode.hostCenter) {
+    if (widget.layoutMode == LayoutMode.hostCenter) {
       return [4];
     }
 
@@ -218,7 +305,7 @@ class LivePage extends StatelessWidget {
 
   ZegoLiveAudioRoomLayoutConfig getLayoutConfig() {
     final config = ZegoLiveAudioRoomLayoutConfig();
-    switch (layoutMode) {
+    switch (widget.layoutMode) {
       case LayoutMode.defaultLayout:
         break;
       case LayoutMode.full:
