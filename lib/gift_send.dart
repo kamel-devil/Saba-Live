@@ -77,22 +77,26 @@ class GiftWidgetState extends State<GiftWidget>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<MovieEntity>(
-      future: movieEntity,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          animationController ??= (SVGAAnimationController(vsync: this)
-            ..videoItem = snapshot.data as MovieEntity
-            ..forward().whenComplete(() {
-              widget.onRemove();
-            }));
-          return SVGAImage(animationController!);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
+    return SVGASimpleImage(
+        resUrl: "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
+
+
+    //   FutureBuilder<MovieEntity>(
+    //   future: movieEntity,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       animationController ??= (SVGAAnimationController(vsync: this)
+    //         ..videoItem = snapshot.data as MovieEntity
+    //         ..forward().whenComplete(() {
+    //           widget.onRemove();
+    //         }));
+    //       return SVGAImage(animationController!);
+    //     } else if (snapshot.hasError) {
+    //       return Text('${snapshot.error}');
+    //     } else {
+    //       return const CircularProgressIndicator();
+    //     }
+    //   },
+    // );
   }
 }
