@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:livechat/util/const/color_const.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 
 class ZegoInRoomLiveCommentingViewItem extends StatelessWidget {
@@ -22,48 +23,44 @@ class ZegoInRoomLiveCommentingViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final messageBackgroundColor = const Color(0xff2a2a2a).withOpacity(0.5);
-    const messageNameColor = Color(0xffFFB763);
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Card(
-          color: messageBackgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(26.r)),
-          ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(20.r, 10.r, 20.r, 10.r),
-            child: RichText(
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              text: TextSpan(
-                children: [
-                  if (prefix != null) prefixWidget(),
-                  TextSpan(
-                    text: user.name,
-                    style: TextStyle(
-                      fontSize: 26.r,
-                      color: messageNameColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  WidgetSpan(child: SizedBox(width: 10.r)),
-                  TextSpan(
-                    text: isHorizontal ? message : '\n$message',
-                    style: TextStyle(
-                      fontSize: 26.r,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            offset: Offset(2.0, 1.0),
+            blurRadius: 10.0,
+          )
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
+            text: TextSpan(
+              children: [
+                prefixWidget(),
+              ],
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 10,top: 5),
+            child: Text(
+              isHorizontal ? message : '\n$message',
+              style: TextStyle(
+                fontSize: 26.r,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -76,15 +73,22 @@ class ZegoInRoomLiveCommentingViewItem extends StatelessWidget {
           offset: Offset(0, 0.r),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxWidth: 34.r + prefix!.length * 12.r,
+              maxWidth: 60.r + prefix!.length * 12.r,
               minWidth: 34.r,
               minHeight: 36.r,
-              maxHeight: 36.r,
+              maxHeight: 50.r,
             ),
             child: Container(
+              padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: messageHostColor,
-                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                // color: messageHostColor,
+                gradient: const LinearGradient(
+                  colors: [
+                    messageHostColor,
+                    Colors.purpleAccent
+                  ]
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(12.r)),
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(12.r, 4.r, 12.r, 4.r),
@@ -94,6 +98,7 @@ class ZegoInRoomLiveCommentingViewItem extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.r,
+                      fontWeight: FontWeight.w900
                     ),
                   ),
                 ),

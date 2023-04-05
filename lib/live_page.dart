@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:livechat/util/const/gradient_const.dart';
 import 'package:livechat/zegoinroomliveviewitem.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 import 'package:svgaplayer_flutter/parser.dart';
 import 'package:svgaplayer_flutter/player.dart';
 import 'package:http/http.dart' as http;
-import 'package:svgaplayer_flutter/proto/svga.pb.dart';
 
 import 'constants.dart';
 import 'gift_send.dart';
@@ -31,13 +31,14 @@ class LivePage extends StatefulWidget {
 class _LivePageState extends State<LivePage> {
   final List<StreamSubscription<dynamic>?> subscriptions = [];
   var animationVisibility = ValueNotifier<bool>(true);
+  int? numOfUsers;
 
   void onInRoomCommandReceived(ZegoInRoomCommandReceivedData commandData) {
     debugPrint(
         "onInRoomCommandReceived, fromUser:${commandData.fromUser}, command:${commandData.command}");
     // You can display different animations according to gift-type
     if (commandData.fromUser.id != localUserID) {
-      GiftWidget.show(context, "assets/sports-car.svga");
+      GiftWidget.show(context, "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
     }
   }
 
@@ -62,12 +63,14 @@ class _LivePageState extends State<LivePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ZegoUIKitPrebuiltLiveAudioRoom(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: ZegoUIKitPrebuiltLiveAudioRoom(
           appID: 1091141321 /*input your AppID*/,
           appSign:
-              '93f42e59c8f5b204e500416d4a9ccb639e4cb28bccd0fd927c637281b7918e21' /*input your AppSign*/,
+          '93f42e59c8f5b204e500416d4a9ccb639e4cb28bccd0fd927c637281b7918e21' /*input your AppSign*/,
           userID: localUserID,
-          userName: 'user_$localUserID',
+          userName: 'Kareem',
           roomID: widget.roomID,
           config: (widget.isHost
               ? ZegoUIKitPrebuiltLiveAudioRoomConfig.host()
@@ -79,22 +82,99 @@ class _LivePageState extends State<LivePage> {
             ..background = background()
             ..inRoomMessageViewConfig = getMessageViewConfig()
             ..bottomMenuBarConfig =
-                ZegoBottomMenuBarConfig(maxCount: 5, audienceExtendButtons: [
+            ZegoBottomMenuBarConfig(maxCount: 5, hostExtendButtons: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
                   fixedSize: const Size(40, 40),
                   shape: const CircleBorder(),
                 ),
                 onPressed: () {
-                  _sendGift();
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return InkWell(
+                        onTap: () {
+                          _sendGift();
+                        },
+                        child: const SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: SVGASimpleImage(
+                              resUrl:
+                              "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"),
+                        ),
+                      );
+                    },
+                  );
                 },
-                child: const Icon(Icons.blender),
+                child: Image.asset('assets/images/gift.png'),
+              )
+            ], speakerExtendButtons: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  fixedSize: const Size(40, 40),
+                  shape: const CircleBorder(),
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return InkWell(
+                        onTap: () {
+                          _sendGift();
+                        },
+                        child: const SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: SVGASimpleImage(
+                              resUrl:
+                              "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Image.asset('assets/images/gift.png'),
+              )
+            ], audienceExtendButtons: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  fixedSize: const Size(40, 40),
+                  shape: const CircleBorder(),
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return InkWell(
+                        onTap: () {
+                          _sendGift();
+                        },
+                        child: const SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: SVGASimpleImage(
+                              resUrl:
+                              "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Image.asset('assets/images/gift.png'),
               )
             ])
-            // ..userAvatarUrl = 'your_avatar_url'
+          // ..userAvatarUrl = 'your_avatar_url'
             ..onUserCountOrPropertyChanged = (List<ZegoUIKitUser> users) {
               debugPrint(
                   'onUserCountOrPropertyChanged:${users.map((e) => e.toString())}');
+              debugPrint(users.length.toString());
+              setState(() {
+                numOfUsers = users.length;
+              });
             }
             ..onSeatClosed = () {
               debugPrint('on seat closed');
@@ -103,9 +183,9 @@ class _LivePageState extends State<LivePage> {
               debugPrint('on seat opened');
             }
             ..onSeatsChanged = (
-              Map<int, ZegoUIKitUser> takenSeats,
-              List<int> untakenSeats,
-            ) {
+                Map<int, ZegoUIKitUser> takenSeats,
+                List<int> untakenSeats,
+                ) {
               debugPrint(
                   'on seats changed, taken seats:$takenSeats, untaken seats:$untakenSeats');
             }
@@ -134,21 +214,22 @@ class _LivePageState extends State<LivePage> {
             }
 
           /// WARNING: will override prebuilt logic
-          // ..onSeatClicked = (int index, ZegoUIKitUser? user) {
-          //   debugPrint(
-          //       'on seat clicked, index:$index, user:${user.toString()}');
-          //
-          //   showDemoBottomSheet(context);
-          // }
+            ..onSeatClicked = (int index, ZegoUIKitUser? user) {
+              debugPrint(
+                  'on seat clicked, index:$index, user:${user.toString()}');
+
+              showDemoBottomSheet(context);
+            }
 
           /// WARNING: will override prebuilt logic
-          // ..onMemberListMoreButtonPressed = (ZegoUIKitUser user) {
-          //   debugPrint(
-          //       'on member list more button pressed, user:${user.toString()}');
-          //
-          //   showDemoBottomSheet(context);
-          // },
-          ),
+            ..onMemberListMoreButtonPressed = (ZegoUIKitUser user) {
+              debugPrint(
+                  'on member list more button pressed, user:${user.toString()}');
+
+              showDemoBottomSheet(context);
+            },
+        ),
+      ),
     );
   }
 
@@ -168,13 +249,15 @@ class _LivePageState extends State<LivePage> {
           'gift_type': 1001,
           'gift_count': 1,
           'timestamp': DateTime.now().millisecondsSinceEpoch,
+          "to": localUserID,
         }),
       );
 
       if (response.statusCode == 200) {
         // When the gift giver calls the gift interface successfully,
         // the gift animation can start to be displayed
-        GiftWidget.show(context, "assets/EmptyState.svga");
+        GiftWidget.show(context,
+            "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
       }
     } on Exception catch (error) {
       debugPrint("[ERROR], store fcm token exception, ${error.toString()}");
@@ -186,12 +269,13 @@ class _LivePageState extends State<LivePage> {
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: Image.asset('assets/images/background.png').image,
-            ),
-          ),
+          decoration: const BoxDecoration(gradient: SIGNUP_BACKGROUND),
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     fit: BoxFit.fill,
+          //     image: Image.asset('assets/images/background.png').image,
+          //   ),
+          // ),
         ),
         const Positioned(
             top: 10,
@@ -217,7 +301,17 @@ class _LivePageState extends State<LivePage> {
               fontWeight: FontWeight.w500,
             ),
           ),
-        )
+        ),
+        Align(
+            alignment: Alignment.topRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(numOfUsers.toString()),
+                const Icon(Icons.person),
+
+              ],
+            )),
       ],
     );
   }
@@ -248,27 +342,31 @@ class _LivePageState extends State<LivePage> {
       Map<String, dynamic> extraInfo,
     ) {
       /// how to use itemBuilder to custom message view
-      return Stack(
-        children: [
-          ZegoInRoomLiveCommentingViewItem(
-            user: message.user,
-            message: message.message,
-          ),
-
-          /// add a red point
-          Positioned(
-            top: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.red,
-              ),
-              width: 10,
-              height: 10,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            ZegoInRoomLiveCommentingViewItem(
+              prefix: message.user.name,
+              user: message.user,
+              message: message.message,
             ),
-          ),
-        ],
+
+            /// add a red point
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.purpleAccent,
+                ),
+                width: 10,
+                height: 10,
+              ),
+            ),
+          ],
+        ),
       );
     });
   }

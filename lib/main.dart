@@ -1,11 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:livechat/util/const/color_const.dart';
 
 // Package imports:
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 
 // Project imports:
-import 'home_page.dart';
+import 'auth/login.dart';
+import 'navigation/coordinator.dart';
+
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Flutter Demo', home: HomePage());
+    return  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: BLUE_DEEP,
+          accentColor: YELLOW,
+          fontFamily: "Montserrat",
+        ),
+        title: 'Flutter Demo',
+        home: const NavigationOneCoordinator());
   }
 }

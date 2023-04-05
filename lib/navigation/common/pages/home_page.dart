@@ -1,17 +1,15 @@
-// Dart imports:
 import 'dart:math';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'constants.dart';
-import 'live_page.dart';
+import '../../../constants.dart';
+import '../../../live_page.dart';
+import '../../../util/const/color_const.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  HomePage(this.onMenuPressed, {super.key});
 
-  /// Users who use the same liveID can join the same live audio room.
+  final VoidCallback onMenuPressed;
   final roomIDTextCtrl =
       TextEditingController(text: Random().nextInt(10000).toString());
   final layoutValueNotifier =
@@ -23,10 +21,23 @@ class HomePage extends StatelessWidget {
       fixedSize: const Size(120, 60),
       backgroundColor: const Color(0xff2C2F3E).withOpacity(0.6),
     );
-
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [YELLOW, GREEN, BLUE],
+        ),
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            offset: Offset(2.0, 1.0),
+            blurRadius: 10.0,
+          )
+        ],
+      ),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
