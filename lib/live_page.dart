@@ -1635,6 +1635,7 @@ class _LivePageState extends State<LivePage>
                   backgroundColor: Colors.transparent,
                   fixedSize: const Size(40, 40),
                   shape: const CircleBorder(),
+
                 ),
                 onPressed: () {
                   showModalBottomSheet(
