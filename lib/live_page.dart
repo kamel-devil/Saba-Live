@@ -35,8 +35,7 @@ class _LivePageState extends State<LivePage>
   var animationVisibility = ValueNotifier<bool>(true);
   int? numOfUsers;
   late TabController _tabController;
-
-  // late ZegoAudioLiveRoomOption _option;
+  String selectValue = '1'; // late ZegoAudioLiveRoomOption _option;
   // late ZegoAudioLiveRoomController _controller;
 
   void onInRoomCommandReceived(ZegoInRoomCommandReceivedData commandData) {
@@ -115,726 +114,753 @@ class _LivePageState extends State<LivePage>
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return Container(
-                        width: double.infinity,
-                        height: 400,
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [YELLOW, GREEN, BLUE],
-                            ),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(2.0, 1.0),
-                                blurRadius: 10.0,
-                              )
-                            ],
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(25),
-                                topLeft: Radius.circular(25))),
-                        child: Stack(
-                          fit: StackFit.loose,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 50),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Row(
-                                      children: [
-                                        DottedBorder(
-                                          borderType: BorderType.Oval,
-                                          dashPattern: const [
-                                            10,
-                                            5,
-                                            10,
-                                            5,
-                                            10,
-                                            5
-                                          ],
-                                          child: CircleAvatar(
-                                            backgroundColor:
-                                                Colors.yellow.shade700,
-                                            child: const Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        ...List.generate(
-                                            ZegoUIKit().getAllUsers().length,
-                                            (index) => const Padding(
-                                                  padding: EdgeInsets.all(5.0),
-                                                  child: CircleAvatar(
-                                                    backgroundImage: AssetImage(
-                                                        'assets/avatars/avatar_5.png'),
-                                                  ),
-                                                ))
-                                      ],
-                                    ),
-                                  ),
-                                  const Divider(
-                                    color: Colors.blueGrey,
-                                    thickness: 2,
-                                  ),
-                                  TabBar(
-                                    controller: _tabController,
-                                    indicatorColor: Colors.white,
-                                    isScrollable: true,
-                                    unselectedLabelColor: Colors.grey,
-                                    unselectedLabelStyle: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                    labelColor: Colors.black,
-                                    labelStyle: const TextStyle(
-                                        fontWeight: FontWeight.w900),
-                                    indicatorSize: TabBarIndicatorSize.label,
-                                    tabs: const [
-                                      Tab(text: 'Tab 1'),
-                                      Tab(text: 'Tab 2'),
-                                      Tab(text: 'Tab 2'),
-                                      Tab(text: 'Tab 2'),
-                                      Tab(text: 'Tab 2'),
-                                      Tab(text: 'Tab 2'),
-                                    ],
-                                  ),
-                                  Expanded(
-                                    child: TabBarView(
-                                      controller: _tabController,
-                                      physics: const ScrollPhysics(),
-                                      children: [
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      onTap: () {
-                                                        _sendGift();
-                                                      },
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .w700),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          child: Wrap(
-                                            children: List.generate(
-                                                10,
-                                                (index) => InkWell(
-                                                      child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        margin: const EdgeInsets
-                                                            .all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .withOpacity(
-                                                                    0.2)),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 50,
-                                                              height: 60,
-                                                              child:
-                                                                  SVGASimpleImage(
-                                                                assetsName:
-                                                                    'assets/angel.svga',
-                                                                // resUrl:
-                                                                //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
-                                                              ),
-                                                            ),
-                                                            const Text(
-                                                              'Angle',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  'assets/images/coin.png',
-                                                                  width: 30,
-                                                                  height: 20,
-                                                                ),
-                                                                const Text(
-                                                                  '300',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                      return StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        return Container(
+                          width: double.infinity,
+                          height: 400,
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [YELLOW, GREEN, BLUE],
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      YELLOW,
-                                      GREEN,
-                                      BLUE,
-                                      GREEN,
-                                    ],
-                                  ),
-                                  boxShadow: const <BoxShadow>[
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(2.0, 1.0),
-                                      blurRadius: 15.0,
-                                    )
-                                  ],
-                                ),
-                                width: double.infinity,
-                                height: 55,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(2.0, 1.0),
+                                  blurRadius: 10.0,
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(25),
+                                  topLeft: Radius.circular(25))),
+                          child: Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 50),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/coin.png',
-                                          width: 30,
-                                          height: 20,
-                                        ),
-                                        const Text(
-                                          '300',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        const Icon(
-                                          Icons.arrow_forward_ios_outlined,
-                                          size: 20,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
+                                    SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
                                       child: Row(
                                         children: [
-                                          Container(
+                                          DottedBorder(
+                                            borderType: BorderType.Oval,
+                                            dashPattern: const [
+                                              10,
+                                              5,
+                                              10,
+                                              5,
+                                              10,
+                                              5
+                                            ],
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.yellow.shade700,
+                                              child: const Icon(
+                                                Icons
+                                                    .arrow_forward_ios_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          ...List.generate(
+                                              ZegoUIKit().getAllUsers().length,
+                                              (index) => const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: CircleAvatar(
+                                                      backgroundImage: AssetImage(
+                                                          'assets/avatars/avatar_5.png'),
+                                                    ),
+                                                  ))
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(
+                                      color: Colors.blueGrey,
+                                      thickness: 2,
+                                    ),
+                                    TabBar(
+                                      controller: _tabController,
+                                      indicatorColor: Colors.white,
+                                      isScrollable: true,
+                                      unselectedLabelColor: Colors.grey,
+                                      unselectedLabelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                      labelColor: Colors.black,
+                                      labelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                      indicatorSize: TabBarIndicatorSize.label,
+                                      tabs: const [
+                                        Tab(text: 'Tab 1'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: TabBarView(
+                                        controller: _tabController,
+                                        physics: const ScrollPhysics(),
+                                        children: [
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        onTap: () {
+                                                          _sendGift();
+                                                        },
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                  (index) => InkWell(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 50,
+                                                                height: 60,
+                                                                child:
+                                                                    SVGASimpleImage(
+                                                                  assetsName:
+                                                                      'assets/angel.svga',
+                                                                  // resUrl:
+                                                                  //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                'Angle',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    'assets/images/coin.png',
+                                                                    width: 30,
+                                                                    height: 20,
+                                                                  ),
+                                                                  const Text(
+                                                                    '300',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w700),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        YELLOW,
+                                        GREEN,
+                                        BLUE,
+                                        GREEN,
+                                      ],
+                                    ),
+                                    boxShadow: const <BoxShadow>[
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(2.0, 1.0),
+                                        blurRadius: 15.0,
+                                      )
+                                    ],
+                                  ),
+                                  width: double.infinity,
+                                  height: 55,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/coin.png',
+                                            width: 30,
+                                            height: 20,
+                                          ),
+                                          const Text(
+                                            '300',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          const Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            size: 20,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                width: 80,
+                                                height: 70,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .yellow.shade400),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    50),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    50))),
+                                                child: DropdownButton(
+                                                  value: selectValue,
+                                                  items: const [
+                                                    //add items in the dropdown
+                                                    DropdownMenuItem(
+                                                      value: "1",
+                                                      child: Text("1"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                        value: "4",
+                                                        child: Text("4")),
+                                                    DropdownMenuItem(
+                                                      value: "6",
+                                                      child: Text("6"),
+                                                    )
+                                                  ],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      selectValue = value!;
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  iconEnabledColor:
+                                                      Colors.white,
+                                                  //Icon color
+                                                  style: const TextStyle(
+                                                      //te
+                                                      color: Colors.white,
+                                                      //Font color
+                                                      fontSize:
+                                                          20 //font size on dropdown button
+                                                      ),
+
+                                                  dropdownColor: Colors
+                                                      .greenAccent.shade100,
+                                                  //dropdown background color
+                                                  underline: Container(),
+                                                  //remove underline
+                                                  isExpanded:
+                                                      true, //make true to make width 100%
+                                                )),
+                                            const Divider(
+                                              thickness: 2,
+                                            ),
+                                            Container(
                                               width: 80,
-                                              height: 70,
+                                              height: 50,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Colors
-                                                          .yellow.shade400),
+                                                          .yellow.shade900),
+                                                  color: Colors.yellow.shade700,
                                                   borderRadius:
                                                       const BorderRadius.only(
-                                                          topLeft:
+                                                          topRight:
                                                               Radius.circular(
                                                                   50),
-                                                          bottomLeft:
+                                                          bottomRight:
                                                               Radius.circular(
                                                                   50))),
-                                              child: DropdownButton(
-                                                value: "United Kingdom",
-                                                items: const [ //add items in the dropdown
-                                                  DropdownMenuItem(
-                                                    value: "1",
-                                                    child: Text("1"),
-                                                  ),
-                                                  DropdownMenuItem(
-                                                      value: "4",
-                                                      child: Text("4")
-                                                  ),
-                                                  DropdownMenuItem(
-                                                    value: "6",
-                                                    child: Text("6"),
-                                                  )
-
-                                                ],
-                                                onChanged: (value){ //get value when changed
-                                                  print("You have selected $value");
-                                                },
-                                                icon: const Padding( //Icon at tail, arrow bottom is default icon
-                                                    padding: EdgeInsets.only(left:20),
-                                                    child:Icon(Icons.arrow_circle_down_sharp)
-                                                ),
-                                                iconEnabledColor: Colors.white, //Icon color
-                                                style: const TextStyle(  //te
-                                                    color: Colors.white, //Font color
-                                                    fontSize: 20 //font size on dropdown button
-                                                ),
-
-                                                dropdownColor: Colors.redAccent, //dropdown background color
-                                                underline: Container(), //remove underline
-                                                isExpanded: true, //make true to make width 100%
-                                              )),
-                                          const Divider(
-                                            thickness: 2,
-                                          ),
-                                          Container(
-                                            width: 80,
-                                            height: 50,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color:
-                                                        Colors.yellow.shade900),
-                                                color: Colors.yellow.shade700,
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                        topRight:
-                                                            Radius.circular(50),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                50))),
-                                            child: const Text(
-                                              'send',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                              child: const Text(
+                                                'send',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                              )
+                            ],
+                          ),
+                        );
+                      });
                     },
                   );
                 },
@@ -851,18 +877,753 @@ class _LivePageState extends State<LivePage>
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return InkWell(
-                        onTap: () {
-                          _sendGift();
-                        },
-                        child: const SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: SVGASimpleImage(
-                              resUrl:
-                                  "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"),
-                        ),
-                      );
+                      return StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        return Container(
+                          width: double.infinity,
+                          height: 400,
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [YELLOW, GREEN, BLUE],
+                              ),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(2.0, 1.0),
+                                  blurRadius: 10.0,
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(25),
+                                  topLeft: Radius.circular(25))),
+                          child: Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 50),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          DottedBorder(
+                                            borderType: BorderType.Oval,
+                                            dashPattern: const [
+                                              10,
+                                              5,
+                                              10,
+                                              5,
+                                              10,
+                                              5
+                                            ],
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                              Colors.yellow.shade700,
+                                              child: const Icon(
+                                                Icons
+                                                    .arrow_forward_ios_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          ...List.generate(
+                                              ZegoUIKit().getAllUsers().length,
+                                                  (index) => const Padding(
+                                                padding:
+                                                EdgeInsets.all(5.0),
+                                                child: CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/avatars/avatar_5.png'),
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(
+                                      color: Colors.blueGrey,
+                                      thickness: 2,
+                                    ),
+                                    TabBar(
+                                      controller: _tabController,
+                                      indicatorColor: Colors.white,
+                                      isScrollable: true,
+                                      unselectedLabelColor: Colors.grey,
+                                      unselectedLabelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                      labelColor: Colors.black,
+                                      labelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                      indicatorSize: TabBarIndicatorSize.label,
+                                      tabs: const [
+                                        Tab(text: 'Tab 1'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: TabBarView(
+                                        controller: _tabController,
+                                        physics: const ScrollPhysics(),
+                                        children: [
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    onTap: () {
+                                                      _sendGift();
+                                                    },
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        YELLOW,
+                                        GREEN,
+                                        BLUE,
+                                        GREEN,
+                                      ],
+                                    ),
+                                    boxShadow: const <BoxShadow>[
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(2.0, 1.0),
+                                        blurRadius: 15.0,
+                                      )
+                                    ],
+                                  ),
+                                  width: double.infinity,
+                                  height: 55,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/coin.png',
+                                            width: 30,
+                                            height: 20,
+                                          ),
+                                          const Text(
+                                            '300',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          const Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            size: 20,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                width: 80,
+                                                height: 70,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .yellow.shade400),
+                                                    borderRadius:
+                                                    const BorderRadius.only(
+                                                        topLeft:
+                                                        Radius.circular(
+                                                            50),
+                                                        bottomLeft:
+                                                        Radius.circular(
+                                                            50))),
+                                                child: DropdownButton(
+                                                  value: selectValue,
+                                                  items: const [
+                                                    //add items in the dropdown
+                                                    DropdownMenuItem(
+                                                      value: "1",
+                                                      child: Text("1"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                        value: "4",
+                                                        child: Text("4")),
+                                                    DropdownMenuItem(
+                                                      value: "6",
+                                                      child: Text("6"),
+                                                    )
+                                                  ],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      selectValue = value!;
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  iconEnabledColor:
+                                                  Colors.white,
+                                                  //Icon color
+                                                  style: const TextStyle(
+                                                    //te
+                                                      color: Colors.white,
+                                                      //Font color
+                                                      fontSize:
+                                                      20 //font size on dropdown button
+                                                  ),
+
+                                                  dropdownColor: Colors
+                                                      .greenAccent.shade100,
+                                                  //dropdown background color
+                                                  underline: Container(),
+                                                  //remove underline
+                                                  isExpanded:
+                                                  true, //make true to make width 100%
+                                                )),
+                                            const Divider(
+                                              thickness: 2,
+                                            ),
+                                            Container(
+                                              width: 80,
+                                              height: 50,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors
+                                                          .yellow.shade900),
+                                                  color: Colors.yellow.shade700,
+                                                  borderRadius:
+                                                  const BorderRadius.only(
+                                                      topRight:
+                                                      Radius.circular(
+                                                          50),
+                                                      bottomRight:
+                                                      Radius.circular(
+                                                          50))),
+                                              child: const Text(
+                                                'send',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.w700),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      });
                     },
                   );
                 },
@@ -879,18 +1640,753 @@ class _LivePageState extends State<LivePage>
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return InkWell(
-                        onTap: () {
-                          _sendGift();
-                        },
-                        child: const SizedBox(
-                          width: 200,
-                          height: 200,
-                          child: SVGASimpleImage(
-                              resUrl:
-                                  "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"),
-                        ),
-                      );
+                      return StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        return Container(
+                          width: double.infinity,
+                          height: 400,
+                          decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [YELLOW, GREEN, BLUE],
+                              ),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(2.0, 1.0),
+                                  blurRadius: 10.0,
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(25),
+                                  topLeft: Radius.circular(25))),
+                          child: Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 50),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          DottedBorder(
+                                            borderType: BorderType.Oval,
+                                            dashPattern: const [
+                                              10,
+                                              5,
+                                              10,
+                                              5,
+                                              10,
+                                              5
+                                            ],
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                              Colors.yellow.shade700,
+                                              child: const Icon(
+                                                Icons
+                                                    .arrow_forward_ios_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          ...List.generate(
+                                              ZegoUIKit().getAllUsers().length,
+                                                  (index) => const Padding(
+                                                padding:
+                                                EdgeInsets.all(5.0),
+                                                child: CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/avatars/avatar_5.png'),
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(
+                                      color: Colors.blueGrey,
+                                      thickness: 2,
+                                    ),
+                                    TabBar(
+                                      controller: _tabController,
+                                      indicatorColor: Colors.white,
+                                      isScrollable: true,
+                                      unselectedLabelColor: Colors.grey,
+                                      unselectedLabelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                      labelColor: Colors.black,
+                                      labelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                      indicatorSize: TabBarIndicatorSize.label,
+                                      tabs: const [
+                                        Tab(text: 'Tab 1'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                        Tab(text: 'Tab 2'),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: TabBarView(
+                                        controller: _tabController,
+                                        physics: const ScrollPhysics(),
+                                        children: [
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    onTap: () {
+                                                      _sendGift();
+                                                    },
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  10,
+                                                      (index) => InkWell(
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width /
+                                                          5,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              12),
+                                                          color: Colors
+                                                              .blueGrey
+                                                              .withOpacity(
+                                                              0.2)),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                        mainAxisSize:
+                                                        MainAxisSize
+                                                            .min,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 60,
+                                                            child:
+                                                            SVGASimpleImage(
+                                                              assetsName:
+                                                              'assets/angel.svga',
+                                                              // resUrl:
+                                                              //     "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true"
+                                                            ),
+                                                          ),
+                                                          const Text(
+                                                            'Angle',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/images/coin.png',
+                                                                width: 30,
+                                                                height: 20,
+                                                              ),
+                                                              const Text(
+                                                                '300',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                    18,
+                                                                    fontWeight:
+                                                                    FontWeight.w700),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        YELLOW,
+                                        GREEN,
+                                        BLUE,
+                                        GREEN,
+                                      ],
+                                    ),
+                                    boxShadow: const <BoxShadow>[
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(2.0, 1.0),
+                                        blurRadius: 15.0,
+                                      )
+                                    ],
+                                  ),
+                                  width: double.infinity,
+                                  height: 55,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/coin.png',
+                                            width: 30,
+                                            height: 20,
+                                          ),
+                                          const Text(
+                                            '300',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          const Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            size: 20,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(50),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                width: 80,
+                                                height: 70,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .yellow.shade400),
+                                                    borderRadius:
+                                                    const BorderRadius.only(
+                                                        topLeft:
+                                                        Radius.circular(
+                                                            50),
+                                                        bottomLeft:
+                                                        Radius.circular(
+                                                            50))),
+                                                child: DropdownButton(
+                                                  value: selectValue,
+                                                  items: const [
+                                                    //add items in the dropdown
+                                                    DropdownMenuItem(
+                                                      value: "1",
+                                                      child: Text("1"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                        value: "4",
+                                                        child: Text("4")),
+                                                    DropdownMenuItem(
+                                                      value: "6",
+                                                      child: Text("6"),
+                                                    )
+                                                  ],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      selectValue = value!;
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  iconEnabledColor:
+                                                  Colors.white,
+                                                  //Icon color
+                                                  style: const TextStyle(
+                                                    //te
+                                                      color: Colors.white,
+                                                      //Font color
+                                                      fontSize:
+                                                      20 //font size on dropdown button
+                                                  ),
+
+                                                  dropdownColor: Colors
+                                                      .greenAccent.shade100,
+                                                  //dropdown background color
+                                                  underline: Container(),
+                                                  //remove underline
+                                                  isExpanded:
+                                                  true, //make true to make width 100%
+                                                )),
+                                            const Divider(
+                                              thickness: 2,
+                                            ),
+                                            Container(
+                                              width: 80,
+                                              height: 50,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors
+                                                          .yellow.shade900),
+                                                  color: Colors.yellow.shade700,
+                                                  borderRadius:
+                                                  const BorderRadius.only(
+                                                      topRight:
+                                                      Radius.circular(
+                                                          50),
+                                                      bottomRight:
+                                                      Radius.circular(
+                                                          50))),
+                                              child: const Text(
+                                                'send',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.w700),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      });
                     },
                   );
                 },

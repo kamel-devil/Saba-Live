@@ -31,6 +31,6 @@ class MyApp extends StatelessWidget {
           fontFamily: "Montserrat",
         ),
         title: 'Flutter Demo',
-        home: const NavigationOneCoordinator());
+        home: const SignPageOne());
   }
 }
