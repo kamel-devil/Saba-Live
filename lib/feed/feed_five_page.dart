@@ -207,8 +207,8 @@ class _FeedFiveState extends State<FeedFivePage> {
       body: Container(
         decoration: BoxDecoration(gradient: GradientUtil.yellowGreen()),
         child: Column(
-          children: <Widget>[
-            const TopTitleBar(),
+          children:  <Widget>[
+
             Expanded(
               child: Stack(
                 children: <Widget>[

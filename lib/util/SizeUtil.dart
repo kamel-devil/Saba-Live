@@ -1,6 +1,7 @@
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'dart:math';
+
 class SizeUtil {
   static const _DESIGN_WIDTH = 750;
   static const _DESIGN_HEIGHT = 1334;

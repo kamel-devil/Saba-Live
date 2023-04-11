@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:livechat/navigation/navigation1/widgets/menu_buttons.dart';
 
+import '../feed/FeedPageEleven.dart';
+import '../util/SizeUtil.dart';
 import 'common/pages/home_page.dart';
 import 'common/widgets/background_common.dart';
 import 'navigation1/animations/home_page_animator.dart';
@@ -34,7 +35,7 @@ class _Coordinator extends State<NavigationOneCoordinator>
   }
 
   _onFeedPressed() {
-    debugPrint("Feed Pressed");
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>const FeedPageEleven()));
   }
 
   _onProfilePressed() {
@@ -46,9 +47,10 @@ class _Coordinator extends State<NavigationOneCoordinator>
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
-        appBar:AppBar(),
+  Widget build(BuildContext context) {
+    SizeUtil.size = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Scaffold(
         body: Material(
           child: BackgroundCommon(
             child: Stack(
@@ -66,26 +68,26 @@ class _Coordinator extends State<NavigationOneCoordinator>
                 ),
                 AnimatedBuilder(
                   animation: _controller,
-                  builder: (context, widget) =>
-                      Transform(
-                        alignment: Alignment.centerLeft,
-                        transform: Matrix4.translationValues(
-                            _animator.translateLeft.value, 0.0, 0.0)
-                          ..scale(_animator.scaleDown.value),
-                        child: HomePage(() => _openMenu()),
-                      ),
+                  builder: (context, widget) => Transform(
+                    alignment: Alignment.centerLeft,
+                    transform: Matrix4.translationValues(
+                        _animator.translateLeft.value, 0.0, 0.0)
+                      ..scale(_animator.scaleDown.value),
+                    child: HomePage(() => _openMenu()),
+                  ),
                 ),
+                 // TopTitleBar(right: ()=> _openMenu(), left:(){},),
               ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Future _openMenu() async {
     try {
-      await _controller
-          .forward()
-          .orCancel;
+      await _controller.forward().orCancel;
     } on TickerCanceled {
       print("Animation Failed");
     }
@@ -93,9 +95,7 @@ class _Coordinator extends State<NavigationOneCoordinator>
 
   Future _showHome() async {
     try {
-      await _controller
-          .reverse()
-          .orCancel;
+      await _controller.reverse().orCancel;
     } on TickerCanceled {
       print("Animation Failed");
     }

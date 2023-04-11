@@ -36,11 +36,10 @@ dependencies:
   zego_uikit_prebuilt_live_audio_room:
   svgaplayer_flutter: ^2.2.0
   cupertino_icons: ^1.0.2
-  getwidget: ^3.0.1
   google_places_picker:
   image_picker:
-
   zego_uikit:
+  dotted_border:
 #  zego_uikit_signaling_plugin:
 
 #  http: ^0.13.4
@@ -72,6 +71,9 @@ flutter:
   assets:
     - assets/images/
     - assets/avatars/
+    - assets/images/feed/
+    - assets/angel.svga
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

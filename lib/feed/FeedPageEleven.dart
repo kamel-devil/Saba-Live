@@ -220,7 +220,7 @@ class _FeedState extends State<FeedPageEleven>
             const BoxDecoration(gradient: LinearGradient(colors: [YELLOW, GREEN])),
         child: Column(
           children: <Widget>[
-            const TopTitleBar(),
+             TopTitleBar(right: () {  }, left: () {  },),
             SizedBox(
               height: SizeUtil.getAxisY(43.0),
             ),
