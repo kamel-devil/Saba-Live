@@ -9,8 +9,6 @@ import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_aud
 import 'auth/login.dart';
 import 'navigation/coordinator.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ZegoUIKit().initLog().then((value) {
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: BLUE_DEEP,
@@ -31,6 +29,6 @@ class MyApp extends StatelessWidget {
           fontFamily: "Montserrat",
         ),
         title: 'Flutter Demo',
-        home: const SignPageOne());
+        home: const NavigationOneCoordinator());
   }
 }
