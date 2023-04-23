@@ -32,7 +32,10 @@ dependencies:
     sdk: flutter
 
   flutter_screenutil:
-
+  nb_utils:
+  carousel_slider:
+  url_launcher:
+  circle_flags: ^1.0.4
   zego_uikit_prebuilt_live_audio_room:
   svgaplayer_flutter: ^2.2.0
   cupertino_icons: ^1.0.2

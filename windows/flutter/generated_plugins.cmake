@@ -3,7 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
+  nb_utils
   permission_handler_windows
+  url_launcher_windows
   zego_express_engine
   zego_zim
 )

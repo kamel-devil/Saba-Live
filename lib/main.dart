@@ -7,6 +7,7 @@ import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_aud
 
 // Project imports:
 import 'auth/login.dart';
+import 'home/home_page.dart';
 import 'navigation/coordinator.dart';
 
 
@@ -31,6 +32,6 @@ class MyApp extends StatelessWidget {
           fontFamily: "Montserrat",
         ),
         title: 'Flutter Demo',
-        home: const SignPageOne());
+        home:  MWGridViewScreen());
   }
 }
